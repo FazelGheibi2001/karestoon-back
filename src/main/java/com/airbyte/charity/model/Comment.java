@@ -21,6 +21,7 @@ public class Comment implements Serializable, Comparator<Comment> {
     private @Column(columnDefinition = "NUMERIC(10, 0)") BigDecimal likeCount;
     private @Column(columnDefinition = "NUMERIC(10, 0)") BigDecimal disLikeCount;
     private Double performance;
+    private @Column(columnDefinition = "VARCHAR(50)") String projectId;
 
     public Comment() {
         this.date = TimeConverter.convert(Date.from(Instant.now()), TimeConverter.UPDATED_PATTERN_FORMAT);
@@ -87,6 +88,14 @@ public class Comment implements Serializable, Comparator<Comment> {
 
     public void setPerformance(Double performance) {
         this.performance = performance;
+    }
+
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
     }
 
     @Override

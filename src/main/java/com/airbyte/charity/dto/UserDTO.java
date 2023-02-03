@@ -1,21 +1,21 @@
 package com.airbyte.charity.dto;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 public class UserDTO implements Serializable {
-    private String firstname;
+    private String firstName;
     private String lastName;
     private String username;
     private String password;
-    private PaymentHistoryDTO payment;
-    private TicketDTO ticket;
+    private String role;
 
-    public String getFirstname() {
-        return firstname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -42,19 +42,11 @@ public class UserDTO implements Serializable {
         this.password = password;
     }
 
-    public PaymentHistoryDTO getPayment() {
-        return payment;
+    public String getRole() {
+        return role;
     }
 
-    public void setPayment(PaymentHistoryDTO payment) {
-        this.payment = payment;
-    }
-
-    public TicketDTO getTicket() {
-        return ticket;
-    }
-
-    public void setTicket(TicketDTO ticket) {
-        this.ticket = ticket;
+    public void setRole(String role) {
+        this.role = role;
     }
 }

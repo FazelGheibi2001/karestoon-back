@@ -18,6 +18,7 @@ public class Ticket implements Serializable {
     private @Column(columnDefinition = "VARCHAR(50)") String senderProfile;
     private @Column(columnDefinition = "VARCHAR(4000)") String response;
     private @Column(columnDefinition = "VARCHAR(50)") String date;
+    private @Column(columnDefinition = "VARCHAR(255)") String userId;
 
     public Ticket() {
         this.date = TimeConverter.convert(Date.from(Instant.now()), TimeConverter.UPDATED_PATTERN_FORMAT);
@@ -72,6 +73,14 @@ public class Ticket implements Serializable {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     @Override

@@ -1,11 +1,13 @@
 package com.airbyte.charity.dto;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 public class OrganizationDTO implements Serializable {
     private String name;
     private String address;
     private String description;
+    private @NotNull String projectId;
 
     public String getName() {
         return name;
@@ -29,5 +31,13 @@ public class OrganizationDTO implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
     }
 }

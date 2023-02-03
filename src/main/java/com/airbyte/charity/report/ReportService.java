@@ -35,6 +35,7 @@ public class ReportService extends ParentService<Report, ReportRepository, Repor
         report.setDate(dto.getDate());
         report.setDescription(dto.getDescription());
         report.setTitle(dto.getTitle());
+        report.setProjectId(dto.getProjectId());
 
         if (dto.getFiles() != null && !dto.getFiles().isEmpty()) {
             Map<String, String> fileMap = new TreeMap<>();
@@ -57,6 +58,9 @@ public class ReportService extends ParentService<Report, ReportRepository, Repor
         }
         if (search.getTitle() != null && !search.getTitle().isEmpty()) {
             predicates.add(criteriaBuilder.like(root.get("title"), "%" + search.getTitle() + "%"));
+        }
+        if (search.getProjectId() != null) {
+            predicates.add(criteriaBuilder.equal(root.get("projectId"), search.getProjectId()));
         }
 
         criteriaBuilderQuery.where(predicates.toArray(new Predicate[0]));

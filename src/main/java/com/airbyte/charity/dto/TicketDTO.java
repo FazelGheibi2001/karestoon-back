@@ -1,11 +1,14 @@
 package com.airbyte.charity.dto;
 
+import javax.validation.constraints.NotNull;
+
 public class TicketDTO {
     private String sender;
     private String request;
     private String senderProfile;
     private String response;
     private String date;
+    private @NotNull String userId;
 
     public String getSender() {
         return sender;
@@ -45,5 +48,13 @@ public class TicketDTO {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

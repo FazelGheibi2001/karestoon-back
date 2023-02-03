@@ -2,6 +2,7 @@ package com.airbyte.charity.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 
 public class CommentDTO {
@@ -10,6 +11,7 @@ public class CommentDTO {
     private String date;
     private Long likeCount;
     private Long disLikeCount;
+    private @NotNull String projectId;
 
     public String getSenderName() {
         return senderName;
@@ -49,5 +51,13 @@ public class CommentDTO {
 
     public void setDisLikeCount(Long disLikeCount) {
         this.disLikeCount = disLikeCount;
+    }
+
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
     }
 }

@@ -6,6 +6,7 @@ import com.airbyte.charity.model.FileDB;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,18 +16,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.airbyte.charity.permission.ManagePermission.*;
+
 @RestController
 @RequestMapping("/api/v1/file")
 @CrossOrigin("*")
 public class FileController {
-    //TODO : ADD NAME FOR SEARCH FOR FILE
     private final FileStorageService storageService;
 
     public FileController(FileStorageService storageService) {
         this.storageService = storageService;
     }
 
-    @PostMapping()
+    @PostMapping
+    @PreAuthorize(FILE_WRITE)
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
         Map<String, String> message = new HashMap<>();
         try {
@@ -41,10 +44,10 @@ public class FileController {
         }
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<ResponseFile>> getListFiles() {
         List<ResponseFile> files = storageService.getAllFiles().map(dbFile -> {
-            String fileDownloadUri = "https://api.saadatportal.com/api/v1/file/" + dbFile.getId();
+            String fileDownloadUri = "/api/v1/file/" + dbFile.getId();
 
             return new ResponseFile(
                     dbFile.getName(),
@@ -64,7 +67,8 @@ public class FileController {
                 .body(fileDB.getData());
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
+    @PreAuthorize(FILE_WRITE)
     public ResponseEntity<Void> deleteFile(@PathVariable(name = "id") String id) {
         storageService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

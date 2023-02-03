@@ -38,6 +38,7 @@ public class CommentService extends ParentService<Comment, CommentRepository, Co
         comment.setLikeCount(BigDecimal.valueOf(dto.getLikeCount() != null ? dto.getLikeCount() : 0));
         comment.setText(dto.getText());
         comment.setSenderName(dto.getSenderName());
+        comment.setProjectId(dto.getProjectId());
         return comment;
     }
 
@@ -61,14 +62,20 @@ public class CommentService extends ParentService<Comment, CommentRepository, Co
         if (search.getSenderName() != null) {
             predicates.add(criteriaBuilder.equal(root.get("senderName"), search.getSenderName()));
         }
+        if (search.getProjectId() != null) {
+            predicates.add(criteriaBuilder.equal(root.get("projectId"), search.getProjectId()));
+        }
 
         criteriaBuilderQuery.where(predicates.toArray(new Predicate[0]));
 
         return entityManager.createQuery(criteriaBuilderQuery).getResultList();
     }
 
-    public List<Comment> getGoodComment(String projectId) { // TODO : FILL ME
-        List<Comment> comments = repository.findAll();
+    public List<Comment> getGoodComment(String projectId) {
+        CommentDTO dto = new CommentDTO();
+        dto.setProjectId(projectId);
+
+        List<Comment> comments = this.getGoodComment(projectId);
         List<Comment> responseList = new ArrayList<>();
 
         for (Comment comment : comments) {

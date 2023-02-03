@@ -12,6 +12,7 @@ public class Organization implements Serializable {
     private @Column(columnDefinition = "VARCHAR(255)") String name;
     private @Column(columnDefinition = "VARCHAR(255)") String address;
     private @Column(columnDefinition = "VARCHAR(255)") String description;
+    private @Column(columnDefinition = "VARCHAR(50)") String projectId;
 
     public String getId() {
         return id;
@@ -44,6 +45,14 @@ public class Organization implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.airbyte.charity.dto;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -8,6 +9,7 @@ public class ReportDTO implements Serializable {
     private String description;
     private List<FileDTO> files;
     private String date;
+    private @NotNull String projectId;
 
     public String getTitle() {
         return title;
@@ -39,5 +41,13 @@ public class ReportDTO implements Serializable {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
     }
 }

@@ -1,5 +1,6 @@
 package com.airbyte.charity.dto;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 public class PaymentHistoryDTO implements Serializable {
@@ -7,6 +8,7 @@ public class PaymentHistoryDTO implements Serializable {
     private String projectId;
     private String amount;
     private String date;
+    private @NotNull String userId;
 
     public String getProjectName() {
         return projectName;
@@ -38,5 +40,13 @@ public class PaymentHistoryDTO implements Serializable {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

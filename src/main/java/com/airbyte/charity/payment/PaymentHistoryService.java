@@ -33,6 +33,7 @@ public class PaymentHistoryService extends ParentService<PaymentHistory, Payment
         paymentHistory.setAmount(dto.getAmount());
         paymentHistory.setProjectId(dto.getProjectId());
         paymentHistory.setProjectName(dto.getProjectName());
+        paymentHistory.setUserId(dto.getUserId());
         return paymentHistory;
     }
 
@@ -49,6 +50,9 @@ public class PaymentHistoryService extends ParentService<PaymentHistory, Payment
         }
         if (search.getProjectName() != null) {
             predicates.add(criteriaBuilder.equal(root.get("projectName"), search.getProjectName()));
+        }
+        if (search.getUserId() != null) {
+            predicates.add(criteriaBuilder.equal(root.get("userId"), search.getUserId()));
         }
 
         criteriaBuilderQuery.where(predicates.toArray(new Predicate[0]));

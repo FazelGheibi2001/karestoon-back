@@ -47,6 +47,9 @@ public class OrganizationService extends ParentService<Organization, Organizatio
         if (search.getName() != null && !search.getName().isEmpty()) {
             predicates.add(criteriaBuilder.like(root.get("name"), "%" + search.getName() + "%"));
         }
+        if (search.getProjectId() != null) {
+            predicates.add(criteriaBuilder.equal(root.get("projectId"), search.getName()));
+        }
 
         criteriaBuilderQuery.where(predicates.toArray(new Predicate[0]));
 

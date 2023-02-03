@@ -5,6 +5,11 @@ import com.airbyte.charity.dto.TicketDTO;
 import com.airbyte.charity.model.Ticket;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,11 +33,27 @@ public class TicketService extends ParentService<Ticket, TicketRepository, Ticke
         ticket.setResponse(dto.getResponse());
         ticket.setSender(dto.getSender());
         ticket.setSenderProfile(dto.getSenderProfile());
+        ticket.setUserId(dto.getUserId());
         return ticket;
     }
 
     @Override
     public List<Ticket> getWithSearch(TicketDTO search) {
-        return null;
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Ticket> criteriaBuilderQuery = criteriaBuilder.createQuery(Ticket.class);
+
+        Root<Ticket> root = criteriaBuilderQuery.from(Ticket.class);
+        List<Predicate> predicates = new ArrayList<>();
+
+        if (search.getDate() != null) {
+            predicates.add(criteriaBuilder.equal(root.get("date"), search.getDate()));
+        }
+        if (search.getUserId() != null) {
+            predicates.add(criteriaBuilder.equal(root.get("userId"), search.getUserId()));
+        }
+
+        criteriaBuilderQuery.where(predicates.toArray(new Predicate[0]));
+
+        return entityManager.createQuery(criteriaBuilderQuery).getResultList();
     }
 }
