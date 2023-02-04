@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Random;
 
+import static com.airbyte.charity.register.OTPDatabase.OTP_MAP;
+
 @Service
 public class RegisterService {
     private final UserInformationService userInformationService;
@@ -19,16 +21,16 @@ public class RegisterService {
 
     public RegisterDTO find(RegisterDTO dto) {
         try {
-            UserInformation information = userInformationService.getByUsername(dto.getPhoneNumber());
-            dto.setRole(Role.USER.name());
-            dto.setPassword(information.getPassword());
-            dto.setFirstName(information.getFirstName());
-            dto.setLastName(information.getLastName());
-            dto.setStatus("exist");
-            return dto;
+            if (dto.getPhoneNumber() != null && !dto.getPhoneNumber().isEmpty()) {
+                userInformationService.getByUsername(dto.getPhoneNumber());
+                dto.setStatus("exist");
+                return dto;
+            }
+            throw new RuntimeException("phoneNumber must not be null");
         } catch (IllegalArgumentException exception) {
             String otp = generateOTP(6);
-            dto.setOtp(otp);
+            OTP_MAP.put(dto.getPhoneNumber(), otp);
+            // send sms
             dto.setStatus("newUser");
             return dto;
         }
@@ -42,6 +44,19 @@ public class RegisterService {
             otp += (char) ('0' + randomInt);
         }
         return otp;
+    }
+
+    public Boolean checkOTP(RegisterDTO dto) {
+        if (OTP_MAP == null || OTP_MAP.isEmpty()) {
+            throw new RuntimeException("The password has been gone. try again.");
+        }
+        String otp = OTP_MAP.get(dto.getPhoneNumber());
+        if (dto.getOtp().equals((String) otp)) {
+            OTP_MAP.remove(dto.getPhoneNumber());
+            return true;
+        }
+
+        return false;
     }
 
     public RegisterDTO create(RegisterDTO dto) {

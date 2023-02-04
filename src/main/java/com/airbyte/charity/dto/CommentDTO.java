@@ -11,7 +11,7 @@ public class CommentDTO {
     private String date;
     private Long likeCount;
     private Long disLikeCount;
-    private @NotNull String projectId;
+    private String projectId;
 
     public String getSenderName() {
         return senderName;

@@ -7,7 +7,7 @@ public class OrganizationDTO implements Serializable {
     private String name;
     private String address;
     private String description;
-    private @NotNull String projectId;
+    private String projectId;
 
     public String getName() {
         return name;

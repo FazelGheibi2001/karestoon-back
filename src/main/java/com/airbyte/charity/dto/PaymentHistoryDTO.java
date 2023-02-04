@@ -8,7 +8,7 @@ public class PaymentHistoryDTO implements Serializable {
     private String projectId;
     private String amount;
     private String date;
-    private @NotNull String userId;
+    private String userId;
 
     public String getProjectName() {
         return projectName;

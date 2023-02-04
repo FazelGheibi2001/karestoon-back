@@ -9,7 +9,7 @@ public class ReportDTO implements Serializable {
     private String description;
     private List<FileDTO> files;
     private String date;
-    private @NotNull String projectId;
+    private String projectId;
 
     public String getTitle() {
         return title;

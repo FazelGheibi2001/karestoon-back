@@ -20,6 +20,15 @@ public class RegisterController {
         return new ResponseEntity<>(service.find(dto), HttpStatus.OK);
     }
 
+    @PostMapping("/checkOTP")
+    public ResponseEntity<Void> checkOtp(@RequestBody RegisterDTO dto) {
+        Boolean isValid = service.checkOTP(dto);
+        if (isValid) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @PostMapping("/create")
     public ResponseEntity<RegisterDTO> secondStep(@RequestBody RegisterDTO dto) {
         return new ResponseEntity<>(service.create(dto), HttpStatus.CREATED);

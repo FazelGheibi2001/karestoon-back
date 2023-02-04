@@ -8,7 +8,7 @@ public class TicketDTO {
     private String senderProfile;
     private String response;
     private String date;
-    private @NotNull String userId;
+    private String userId;
 
     public String getSender() {
         return sender;
