@@ -67,6 +67,8 @@ public class RegisterService {
         userDTO.setLastName(dto.getLastName());
         userDTO.setRole(Role.USER.name());
         userInformationService.save(userDTO);
+        dto = null;
+        dto = new RegisterDTO();
         dto.setStatus("create");
         dto.setRole(Role.USER.name());
         return dto;
