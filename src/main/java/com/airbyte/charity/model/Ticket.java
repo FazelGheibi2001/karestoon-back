@@ -14,6 +14,7 @@ public class Ticket implements Serializable {
     private @Id
     @Column(columnDefinition = "VARCHAR(50)", nullable = false) String id;
     private @Column(columnDefinition = "VARCHAR(255)") String sender;
+    private @Column(columnDefinition = "VARCHAR(255)") String title;
     private @Column(columnDefinition = "VARCHAR(4000)") String request;
     private @Column(columnDefinition = "VARCHAR(50)") String senderProfile;
     private @Column(columnDefinition = "VARCHAR(4000)") String response;
@@ -81,6 +82,14 @@ public class Ticket implements Serializable {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @Override

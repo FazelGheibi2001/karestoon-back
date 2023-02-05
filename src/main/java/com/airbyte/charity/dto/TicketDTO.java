@@ -9,6 +9,7 @@ public class TicketDTO {
     private String response;
     private String date;
     private String userId;
+    private String title;
 
     public String getSender() {
         return sender;
@@ -56,5 +57,13 @@ public class TicketDTO {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

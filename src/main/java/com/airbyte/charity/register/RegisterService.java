@@ -30,10 +30,26 @@ public class RegisterService {
         } catch (IllegalArgumentException exception) {
             String otp = generateOTP(6);
             OTP_MAP.put(dto.getPhoneNumber(), otp);
-            // send sms
+            sendSMS(otp, dto.getPhoneNumber());
             dto.setStatus("newUser");
             return dto;
         }
+    }
+
+    private void sendSMS(String otp, String phoneNumber) {
+//        OkHttpClient client = new OkHttpClient();
+//
+//        MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
+//        RequestBody body = RequestBody.create(mediaType, "message=test&receptor=09111111111&linenumber=5000222&senddate=1508144471&checkid=1");
+//        Request request = new Request.Builder()
+//                .url("https://api.ghasedak.me/v2/sms/send/simple")
+//                .post(body)
+//                .addHeader("content-type", "application/x-www-form-urlencoded")
+//                .addHeader("apikey", "your apikey")
+//                .addHeader("cache-control", "no-cache")
+//                .build();
+//
+//        Response response = client.newCall(request).execute();
     }
 
     private String generateOTP(int length) {
