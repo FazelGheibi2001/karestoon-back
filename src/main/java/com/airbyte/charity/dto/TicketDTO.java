@@ -1,6 +1,7 @@
 package com.airbyte.charity.dto;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 public class TicketDTO {
     private String sender;
@@ -10,6 +11,7 @@ public class TicketDTO {
     private String date;
     private String userId;
     private String title;
+    private List<ChatDTO> chatList;
 
     public String getSender() {
         return sender;
@@ -65,5 +67,13 @@ public class TicketDTO {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public List<ChatDTO> getChatList() {
+        return chatList;
+    }
+
+    public void setChatList(List<ChatDTO> chatList) {
+        this.chatList = chatList;
     }
 }

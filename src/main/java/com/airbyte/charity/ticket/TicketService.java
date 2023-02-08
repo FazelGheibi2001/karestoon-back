@@ -1,7 +1,10 @@
 package com.airbyte.charity.ticket;
 
+import com.airbyte.charity.ChatRepository;
 import com.airbyte.charity.common.ParentService;
+import com.airbyte.charity.dto.ChatDTO;
 import com.airbyte.charity.dto.TicketDTO;
+import com.airbyte.charity.model.Chat;
 import com.airbyte.charity.model.Ticket;
 import org.springframework.stereotype.Service;
 
@@ -14,28 +17,49 @@ import java.util.List;
 
 @Service
 public class TicketService extends ParentService<Ticket, TicketRepository, TicketDTO> {
+    private final ChatRepository chatRepository;
 
-    public TicketService(TicketRepository repository) {
+    public TicketService(TicketRepository repository, ChatRepository chatRepository) {
         super(repository);
+        this.chatRepository = chatRepository;
     }
 
     @Override
     public Ticket updateModelFromDto(Ticket ticket, TicketDTO dto) {
-        ticket.setRequest(dto.getRequest() != null ? dto.getRequest() : ticket.getRequest());
-        ticket.setResponse(dto.getResponse() != null ? dto.getResponse() : ticket.getResponse());
         ticket.setTitle(dto.getTitle() != null ? dto.getTitle() : ticket.getTitle());
         return ticket;
     }
+
     @Override
     public Ticket convertDTO(TicketDTO dto) {
         Ticket ticket = new Ticket();
-        ticket.setRequest(dto.getRequest());
-        ticket.setResponse(dto.getResponse());
-        ticket.setSender(dto.getSender());
         ticket.setSenderProfile(dto.getSenderProfile());
         ticket.setUserId(dto.getUserId());
         ticket.setTitle(dto.getTitle());
         return ticket;
+    }
+
+    @Override
+    protected void postSave(Ticket ticket, TicketDTO dto) {
+        saveChat(ticket, dto);
+    }
+
+    @Override
+    protected void postUpdate(Ticket ticket, TicketDTO dto) {
+        saveChat(ticket, dto);
+    }
+
+    private void saveChat(Ticket ticket, TicketDTO dto) {
+        if (dto.getChatList() != null && !dto.getChatList().isEmpty()) {
+            for (ChatDTO entity : dto.getChatList()) {
+                Chat chat = new Chat();
+                chat.setTicket(ticket);
+                chat.setSender(entity.getSender());
+                chat.setMessage(entity.getMessage());
+                chat.setDate(entity.getDate());
+                chatRepository.save(chat);
+            }
+        }
     }
 
     @Override

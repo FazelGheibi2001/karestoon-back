@@ -137,7 +137,10 @@ public class Project implements Serializable {
     }
 
     public Integer getProgress() {
-        return (int) ((prepareBudge.doubleValue() / expectedBudge.doubleValue()) * 100);
+        if (prepareBudge != null && expectedBudge != null) {
+            return (int) ((prepareBudge.doubleValue() / expectedBudge.doubleValue()) * 100);
+        }
+        return 0;
     }
 
     @Override
