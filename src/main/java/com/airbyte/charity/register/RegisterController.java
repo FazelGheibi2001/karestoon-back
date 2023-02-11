@@ -20,7 +20,7 @@ public class RegisterController {
         return new ResponseEntity<>(service.find(dto), HttpStatus.OK);
     }
 
-    @PostMapping("/checkOTP")
+    @PostMapping("/verify/checkOTP")
     public ResponseEntity<Void> checkOtp(@RequestBody RegisterDTO dto) {
         Boolean isValid = service.checkOTP(dto);
         if (isValid) {
@@ -32,5 +32,20 @@ public class RegisterController {
     @PostMapping("/create")
     public ResponseEntity<RegisterDTO> secondStep(@RequestBody RegisterDTO dto) {
         return new ResponseEntity<>(service.create(dto), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/forgotPassword")
+    public ResponseEntity<RegisterDTO> forgotPassword(@RequestBody RegisterDTO dto) {
+        return new ResponseEntity<>(service.forgotPassword(dto), HttpStatus.OK);
+    }
+
+    @PostMapping("/forgotPassword/checkOTP")
+    public ResponseEntity<RegisterDTO> forgotPasswordCheckOTP(@RequestBody RegisterDTO dto) {
+        return new ResponseEntity<>(service.checkOTPForgotPassword(dto), HttpStatus.OK);
+    }
+
+    @PostMapping("/updatePassword")
+    public ResponseEntity<RegisterDTO> updatePassword(@RequestBody RegisterDTO dto) {
+        return new ResponseEntity<>(service.updatePassword(dto), HttpStatus.ACCEPTED);
     }
 }

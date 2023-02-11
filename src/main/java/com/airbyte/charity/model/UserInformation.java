@@ -13,7 +13,7 @@ public class UserInformation implements Serializable {
     @Column(columnDefinition = "VARCHAR(50)", nullable = false) String id;
     private @Column(columnDefinition = "VARCHAR(255)") String firstName;
     private @Column(columnDefinition = "VARCHAR(255)") String lastName;
-    private @Column(columnDefinition = "VARCHAR(255)") String username;
+    private @Column(columnDefinition = "VARCHAR(255)", unique = true) String username;
     private @Column(columnDefinition = "VARCHAR(255)") String password;
     private @Column(columnDefinition = "VARCHAR(255)")
     @Enumerated(EnumType.STRING) Role role;

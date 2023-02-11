@@ -4,19 +4,24 @@ import com.airbyte.charity.dto.RegisterDTO;
 import com.airbyte.charity.dto.UserDTO;
 import com.airbyte.charity.model.UserInformation;
 import com.airbyte.charity.permission.Role;
+import com.airbyte.charity.user.UserInformationRepository;
 import com.airbyte.charity.user.UserInformationService;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
+import java.util.UUID;
 
+import static com.airbyte.charity.register.OTPDatabase.FORGOT_PASSWORD_KEY;
 import static com.airbyte.charity.register.OTPDatabase.OTP_MAP;
 
 @Service
 public class RegisterService {
     private final UserInformationService userInformationService;
+    private final UserInformationRepository userInformationRepository;
 
-    public RegisterService(UserInformationService userInformationService) {
+    public RegisterService(UserInformationService userInformationService, UserInformationRepository userInformationRepository) {
         this.userInformationService = userInformationService;
+        this.userInformationRepository = userInformationRepository;
     }
 
     public RegisterDTO find(RegisterDTO dto) {
@@ -69,6 +74,7 @@ public class RegisterService {
         String otp = OTP_MAP.get(dto.getPhoneNumber());
         if (dto.getOtp().equals((String) otp)) {
             OTP_MAP.remove(dto.getPhoneNumber());
+            FORGOT_PASSWORD_KEY.put(dto.getPhoneNumber(), true);
             return true;
         }
 
@@ -76,17 +82,69 @@ public class RegisterService {
     }
 
     public RegisterDTO create(RegisterDTO dto) {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setUsername(dto.getPhoneNumber());
-        userDTO.setPassword(dto.getPassword());
-        userDTO.setFirstName(dto.getFirstName());
-        userDTO.setLastName(dto.getLastName());
-        userDTO.setRole(Role.USER.name());
-        userInformationService.save(userDTO);
+        if (FORGOT_PASSWORD_KEY == null || FORGOT_PASSWORD_KEY.isEmpty()) {
+            throw new RuntimeException("Can not do anything");
+        }
+        if (FORGOT_PASSWORD_KEY.get(dto.getPhoneNumber())) {
+            FORGOT_PASSWORD_KEY.remove(dto.getPhoneNumber());
+            UserDTO userDTO = new UserDTO();
+            userDTO.setUsername(dto.getPhoneNumber());
+            userDTO.setPassword(dto.getPassword());
+            userDTO.setFirstName(dto.getFirstName());
+            userDTO.setLastName(dto.getLastName());
+            userDTO.setRole(Role.USER.name());
+            userInformationService.save(userDTO);
+            dto = null;
+            dto = new RegisterDTO();
+            dto.setStatus("create");
+            dto.setRole(Role.USER.name());
+            return dto;
+        }
         dto = null;
         dto = new RegisterDTO();
-        dto.setStatus("create");
-        dto.setRole(Role.USER.name());
+        dto.setStatus("userCanNotCreated");
+        return dto;
+    }
+
+    public RegisterDTO forgotPassword(RegisterDTO dto) {
+        String otp = generateOTP(6);
+        OTP_MAP.put(dto.getPhoneNumber(), otp);
+        sendSMS(otp, dto.getPhoneNumber());
+        dto.setStatus("OTPSent");
+        return dto;
+    }
+
+    public RegisterDTO checkOTPForgotPassword(RegisterDTO dto) {
+        if (OTP_MAP == null || OTP_MAP.isEmpty()) {
+            throw new RuntimeException("The password has been gone. try again.");
+        }
+        String otp = OTP_MAP.get(dto.getPhoneNumber());
+        if (dto.getOtp().equals((String) otp)) {
+            OTP_MAP.remove(dto.getPhoneNumber());
+            FORGOT_PASSWORD_KEY.put(dto.getPhoneNumber(), true);
+            dto.setStatus("OTPAccepted");
+            return dto;
+        }
+        dto.setStatus("OTPNotAccepted");
+        return dto;
+    }
+
+    public RegisterDTO updatePassword(RegisterDTO dto) {
+        if (FORGOT_PASSWORD_KEY == null || FORGOT_PASSWORD_KEY.isEmpty()) {
+            throw new RuntimeException("Can not do anything");
+        }
+        if (FORGOT_PASSWORD_KEY.get(dto.getPhoneNumber())) {
+            FORGOT_PASSWORD_KEY.remove(dto.getPhoneNumber());
+            UserInformation user = userInformationService.getByUsername(dto.getPhoneNumber());
+            user.setPassword(dto.getPassword());
+            userInformationRepository.save(user);
+            dto = null;
+            dto = new RegisterDTO();
+            dto.setPhoneNumber(user.getUsername());
+            dto.setStatus("passwordUpdated");
+            return dto;
+        }
+        dto.setStatus("passwordCanNotUpdated");
         return dto;
     }
 }

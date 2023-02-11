@@ -42,6 +42,16 @@ public class UserInformationService extends ParentService<UserInformation, UserI
     }
 
     @Override
+    protected void preSave(UserDTO dto) {
+        repository.findAll()
+                .forEach(user -> {
+                    if (dto.getUsername() != null && user.getUsername().equals(dto.getUsername())) {
+                        throw new IllegalArgumentException("username is exist!!!");
+                    }
+                });
+    }
+
+    @Override
     public List<UserInformation> getWithSearch(UserDTO search) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<UserInformation> criteriaBuilderQuery = criteriaBuilder.createQuery(UserInformation.class);
