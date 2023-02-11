@@ -1,6 +1,5 @@
 package com.airbyte.charity.ticket;
 
-import com.airbyte.charity.ChatRepository;
 import com.airbyte.charity.common.ParentService;
 import com.airbyte.charity.dto.ChatDTO;
 import com.airbyte.charity.dto.TicketDTO;

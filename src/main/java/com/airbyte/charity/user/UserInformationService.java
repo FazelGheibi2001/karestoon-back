@@ -46,7 +46,7 @@ public class UserInformationService extends ParentService<UserInformation, UserI
         repository.findAll()
                 .forEach(user -> {
                     if (dto.getUsername() != null && user.getUsername().equals(dto.getUsername())) {
-                        throw new IllegalArgumentException("username is exist!!!");
+                        throw new IllegalArgumentException("username exists!!!");
                     }
                 });
     }

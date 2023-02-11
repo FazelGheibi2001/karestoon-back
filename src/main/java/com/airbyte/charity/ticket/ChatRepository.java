@@ -1,4 +1,4 @@
-package com.airbyte.charity;
+package com.airbyte.charity.ticket;
 
 import com.airbyte.charity.model.Chat;
 import org.springframework.data.jpa.repository.JpaRepository;
