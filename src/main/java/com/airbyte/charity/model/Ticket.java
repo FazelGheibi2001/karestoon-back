@@ -5,6 +5,7 @@ import com.airbyte.charity.common.TimeConverter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -16,11 +17,11 @@ public class Ticket implements Serializable {
     @Column(columnDefinition = "VARCHAR(50)", nullable = false) String id;
     private @Column(columnDefinition = "VARCHAR(255)") String title;
     private @Column(columnDefinition = "VARCHAR(255)") String status;
-    private @Column(columnDefinition = "VARCHAR(50)") String senderProfile;
     private @Column(columnDefinition = "VARCHAR(50)") String userId;
     private @Column(columnDefinition = "VARCHAR(50)") String date;
     private @OneToMany(mappedBy = "ticket", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    List<Chat> chatList;
+    List<Chat> chatList = new ArrayList<>();
+
     public Ticket() {
         this.date = TimeConverter.convert(Date.from(Instant.now()), TimeConverter.UPDATED_PATTERN_FORMAT);
         this.date = TimeConverter.georgianToJalali(this.date);
@@ -33,14 +34,6 @@ public class Ticket implements Serializable {
     @PrePersist
     public void setId() {
         this.id = UUID.randomUUID().toString().replace("-", "");
-    }
-
-    public String getSenderProfile() {
-        return senderProfile;
-    }
-
-    public void setSenderProfile(String senderProfile) {
-        this.senderProfile = senderProfile;
     }
 
     public String getDate() {
@@ -88,7 +81,6 @@ public class Ticket implements Serializable {
         return "Ticket{" +
                 "id='" + id + '\'' +
                 ", title='" + title + '\'' +
-                ", senderProfile='" + senderProfile + '\'' +
                 ", userId='" + userId + '\'' +
                 ", date='" + date + '\'' +
                 ", chatList=" + chatList +

@@ -33,7 +33,6 @@ public class TicketService extends ParentService<Ticket, TicketRepository, Ticke
     @Override
     public Ticket convertDTO(TicketDTO dto) {
         Ticket ticket = new Ticket();
-        ticket.setSenderProfile(dto.getSenderProfile());
         ticket.setUserId(dto.getUserId());
         ticket.setTitle(dto.getTitle());
         ticket.setStatus(dto.getStatus());
@@ -58,7 +57,7 @@ public class TicketService extends ParentService<Ticket, TicketRepository, Ticke
                 chat.setSender(entity.getSender());
                 chat.setMessage(entity.getMessage());
                 chat.setDate(entity.getDate());
-                chatRepository.save(chat);
+                ticket.getChatList().add(chatRepository.save(chat));
             }
         }
     }

@@ -41,8 +41,6 @@ public class CommentControllerIT {
     @Autowired
     private CommentDataProvider dataProvider;
     private CommentDTO comment;
-    @Autowired
-    private UserInformationService userInformationService;
 
     @BeforeEach
     public void initTest() {
@@ -81,7 +79,6 @@ public class CommentControllerIT {
                         .header("Authorization", token()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.[0].id").value(entity.getId()))
-                .andExpect(jsonPath("$.[0].id").value(entity.getId()))
                 .andExpect(jsonPath("$.[0].senderName").value(DEFAULT_STRING))
                 .andExpect(jsonPath("$.[0].text").value(DEFAULT_STRING))
                 .andExpect(jsonPath("$.[0].projectId").value(DEFAULT_STRING));
@@ -92,8 +89,6 @@ public class CommentControllerIT {
     @DisplayName("REST Request to get comment By Id")
     public void getCommentById() throws Exception {
         Comment entity = service.save(comment);
-
-        userInformationService.getAll();
 
         mockMvc.perform(get("/api/v1/comment/{id}", entity.getId())
                         .header("Authorization", token()))
@@ -122,11 +117,11 @@ public class CommentControllerIT {
         Comment newEntity = service.getAll().get(databaseSizeBeforeSave);
 
         assertThat(service.getAll()).hasSize(databaseSizeBeforeSave + 1);
-        assertThat(entity.getId()).isNotBlank();
-        assertThat(entity.getDate()).isNotNull();
-        assertThat(entity.getLikeCount().longValue()).isEqualTo(UPDATED_LONG);
-        assertThat(entity.getDisLikeCount().longValue()).isEqualTo(UPDATED_LONG);
-        assertThat(entity.getSenderName()).isEqualTo(UPDATED_STRING);
+        assertThat(newEntity.getId()).isNotBlank();
+        assertThat(newEntity.getDate()).isNotNull();
+        assertThat(newEntity.getLikeCount().longValue()).isEqualTo(UPDATED_LONG);
+        assertThat(newEntity.getDisLikeCount().longValue()).isEqualTo(UPDATED_LONG);
+        assertThat(newEntity.getSenderName()).isEqualTo(UPDATED_STRING);
     }
 
     @Test
