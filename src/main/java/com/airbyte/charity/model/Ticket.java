@@ -15,6 +15,7 @@ public class Ticket implements Serializable {
     private @Id
     @Column(columnDefinition = "VARCHAR(50)", nullable = false) String id;
     private @Column(columnDefinition = "VARCHAR(255)") String title;
+    private @Column(columnDefinition = "VARCHAR(255)") String status;
     private @Column(columnDefinition = "VARCHAR(50)") String senderProfile;
     private @Column(columnDefinition = "VARCHAR(50)") String userId;
     private @Column(columnDefinition = "VARCHAR(50)") String date;
@@ -72,6 +73,14 @@ public class Ticket implements Serializable {
 
     public void setChatList(List<Chat> chatList) {
         this.chatList = chatList;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override

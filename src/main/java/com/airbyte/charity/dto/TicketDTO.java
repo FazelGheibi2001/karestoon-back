@@ -12,6 +12,7 @@ public class TicketDTO {
     private String userId;
     private String title;
     private List<ChatDTO> chatList;
+    private String status;
 
     public String getSender() {
         return sender;
@@ -75,5 +76,13 @@ public class TicketDTO {
 
     public void setChatList(List<ChatDTO> chatList) {
         this.chatList = chatList;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

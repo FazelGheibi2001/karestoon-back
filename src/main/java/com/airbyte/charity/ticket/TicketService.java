@@ -26,6 +26,7 @@ public class TicketService extends ParentService<Ticket, TicketRepository, Ticke
     @Override
     public Ticket updateModelFromDto(Ticket ticket, TicketDTO dto) {
         ticket.setTitle(dto.getTitle() != null ? dto.getTitle() : ticket.getTitle());
+        ticket.setStatus(dto.getStatus() != null ? dto.getStatus() : ticket.getStatus());
         return ticket;
     }
 
@@ -35,6 +36,7 @@ public class TicketService extends ParentService<Ticket, TicketRepository, Ticke
         ticket.setSenderProfile(dto.getSenderProfile());
         ticket.setUserId(dto.getUserId());
         ticket.setTitle(dto.getTitle());
+        ticket.setStatus(dto.getStatus());
         return ticket;
     }
 

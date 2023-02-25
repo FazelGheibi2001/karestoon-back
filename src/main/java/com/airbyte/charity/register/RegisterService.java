@@ -107,10 +107,15 @@ public class RegisterService {
     }
 
     public RegisterDTO forgotPassword(RegisterDTO dto) {
-        String otp = generateOTP(6);
-        OTP_MAP.put(dto.getPhoneNumber(), otp);
-        sendSMS(otp, dto.getPhoneNumber());
-        dto.setStatus("OTPSent");
+        try {
+            userInformationService.getByUsername(dto.getPhoneNumber());
+            String otp = generateOTP(6);
+            OTP_MAP.put(dto.getPhoneNumber(), otp);
+            sendSMS(otp, dto.getPhoneNumber());
+            dto.setStatus("OTPSent");
+        } catch (IllegalArgumentException exception) {
+            dto.setStatus("newUser");
+        }
         return dto;
     }
 
