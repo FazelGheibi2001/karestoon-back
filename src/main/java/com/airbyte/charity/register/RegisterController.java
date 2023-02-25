@@ -17,7 +17,7 @@ public class RegisterController {
 
     @PostMapping("/verify")
     public ResponseEntity<RegisterDTO> firstStep(@RequestBody RegisterDTO dto) {
-        return new ResponseEntity<>(service.find(dto), HttpStatus.OK);
+        return new ResponseEntity<>(service.verifyPhoneNumber(dto), HttpStatus.OK);
     }
 
     @PostMapping("/verify/checkOTP")
@@ -26,12 +26,16 @@ public class RegisterController {
         if (isValid) {
             return new ResponseEntity<>(HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @PostMapping("/create")
     public ResponseEntity<RegisterDTO> secondStep(@RequestBody RegisterDTO dto) {
-        return new ResponseEntity<>(service.create(dto), HttpStatus.CREATED);
+        RegisterDTO response = service.create(dto);
+        if (response.getStatus().equals("create")) {
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @PostMapping("/forgotPassword")
@@ -41,7 +45,11 @@ public class RegisterController {
 
     @PostMapping("/forgotPassword/checkOTP")
     public ResponseEntity<RegisterDTO> forgotPasswordCheckOTP(@RequestBody RegisterDTO dto) {
-        return new ResponseEntity<>(service.checkOTPForgotPassword(dto), HttpStatus.OK);
+        RegisterDTO response = service.checkOTPForgotPassword(dto);
+        if (response.getStatus().equals("OTPAccepted")) {
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @PostMapping("/updatePassword")

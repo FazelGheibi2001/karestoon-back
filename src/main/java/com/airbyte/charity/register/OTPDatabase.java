@@ -5,5 +5,5 @@ import java.util.TreeMap;
 
 public class OTPDatabase {
     protected static Map<String, String> OTP_MAP = new TreeMap<>();
-    protected static Map<String, Boolean> FORGOT_PASSWORD_KEY = new TreeMap<>();
+    protected static Map<String, Boolean> VALID_PHONE_NUMBER = new TreeMap<>();
 }
