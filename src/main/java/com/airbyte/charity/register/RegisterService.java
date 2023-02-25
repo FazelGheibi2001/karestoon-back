@@ -2,11 +2,14 @@ package com.airbyte.charity.register;
 
 import com.airbyte.charity.dto.RegisterDTO;
 import com.airbyte.charity.dto.UserDTO;
+import com.airbyte.charity.exception.InvalidInputException;
 import com.airbyte.charity.model.UserInformation;
 import com.airbyte.charity.permission.Role;
 import com.airbyte.charity.user.UserInformationRepository;
 import com.airbyte.charity.user.UserInformationService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Random;
 import java.util.UUID;
@@ -31,7 +34,7 @@ public class RegisterService {
                 dto.setStatus("exist");
                 return dto;
             }
-            throw new RuntimeException("phoneNumber must not be null");
+            throw new InvalidInputException("phoneNumber must not be null");
         } catch (IllegalArgumentException exception) {
             String otp = generateOTP(6);
             OTP_MAP.put(dto.getPhoneNumber(), otp);

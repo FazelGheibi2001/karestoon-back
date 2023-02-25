@@ -1,4 +1,4 @@
-package com.airbyte.charity.loader;
+package com.airbyte.charity.security;
 
 import com.airbyte.charity.model.UserInformation;
 import com.airbyte.charity.permission.Role;
@@ -11,12 +11,12 @@ import org.springframework.stereotype.Component;
 import static com.airbyte.charity.CommonTestData.*;
 
 @Component
-public class DataLoader implements ApplicationRunner {
+public class TestDataLoader implements ApplicationRunner {
 
     private UserInformationRepository userRepository;
 
     @Autowired
-    public DataLoader(UserInformationRepository userRepository) {
+    public TestDataLoader(UserInformationRepository userRepository) {
         this.userRepository = userRepository;
     }
 

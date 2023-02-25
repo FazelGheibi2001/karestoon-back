@@ -57,7 +57,6 @@ public class CommentControllerIT {
 
         mockMvc.perform(post("/api/v1/comment")
                         .header("Authorization", token())
-                        .with(csrf().asHeader())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(comment)))
                 .andExpect(status().isCreated());
@@ -79,8 +78,7 @@ public class CommentControllerIT {
         Comment entity = service.save(comment);
 
         mockMvc.perform(get("/api/v1/comment")
-                        .header("Authorization", token())
-                        .with(csrf().asHeader()))
+                        .header("Authorization", token()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.[0].id").value(entity.getId()))
                 .andExpect(jsonPath("$.[0].id").value(entity.getId()))
@@ -98,8 +96,7 @@ public class CommentControllerIT {
         userInformationService.getAll();
 
         mockMvc.perform(get("/api/v1/comment/{id}", entity.getId())
-                        .header("Authorization", token())
-                        .with(csrf().asHeader()))
+                        .header("Authorization", token()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(entity.getId()))
                 .andExpect(jsonPath("$.senderName").value(DEFAULT_STRING))
@@ -118,7 +115,6 @@ public class CommentControllerIT {
 
         mockMvc.perform(put("/api/v1/comment/{id}", entity.getId())
                         .header("Authorization", token())
-                        .with(csrf().asHeader())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(comment)))
                 .andExpect(status().isAccepted());
@@ -141,8 +137,7 @@ public class CommentControllerIT {
         int databaseSizeAfterSave = service.getAll().size();
 
         mockMvc.perform(delete("/api/v1/comment/{id}", entity.getId())
-                        .header("Authorization", token())
-                        .with(csrf().asHeader()))
+                        .header("Authorization", token()))
                 .andExpect(status().isNoContent());
 
         assertThat(service.getAll()).hasSize(databaseSizeAfterSave - 1);
@@ -152,7 +147,6 @@ public class CommentControllerIT {
         MvcResult mvcResult = null;
         try {
             mvcResult = mockMvc.perform(post("/login")
-                            .with(csrf().asHeader())
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(loginDTO())))
                     .andExpect(status().isOk())
