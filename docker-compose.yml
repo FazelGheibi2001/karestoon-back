@@ -1,0 +1,5 @@
+version: '3.5'
+services:
+  api:
+    build: ./
+    image: matinvahediyan/charity-api:1
