@@ -11,7 +11,7 @@ public class PaymentDataProvider {
     public PaymentHistoryDTO createEntity() {
         PaymentHistoryDTO dto = new PaymentHistoryDTO();
         dto.setAmount(DEFAULT_STRING);
-        dto.setUserId(DEFAULT_ID);
+        dto.setUsername(DEFAULT_USERNAME);
         dto.setProjectId(DEFAULT_ID);
         dto.setProjectName(DEFAULT_STRING);
         return dto;
@@ -20,7 +20,7 @@ public class PaymentDataProvider {
     public PaymentHistoryDTO updateEntity() {
         PaymentHistoryDTO dto = new PaymentHistoryDTO();
         dto.setAmount(UPDATED_STRING);
-        dto.setUserId(UPDATED_ID);
+        dto.setUsername(DEFAULT_USERNAME);
         dto.setProjectId(UPDATED_ID);
         dto.setProjectName(UPDATED_STRING);
         return dto;

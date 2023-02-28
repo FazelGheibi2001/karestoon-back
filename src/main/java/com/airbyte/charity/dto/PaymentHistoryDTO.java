@@ -8,7 +8,7 @@ public class PaymentHistoryDTO implements Serializable {
     private String projectId;
     private String amount;
     private String date;
-    private String userId;
+    private String username;
 
     public String getProjectName() {
         return projectName;
@@ -42,11 +42,11 @@ public class PaymentHistoryDTO implements Serializable {
         this.date = date;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
