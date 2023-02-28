@@ -3,7 +3,6 @@ package com.airbyte.charity.payment;
 import com.airbyte.charity.CharityApplication;
 import com.airbyte.charity.dto.PaymentHistoryDTO;
 import com.airbyte.charity.model.PaymentHistory;
-import com.airbyte.charity.user.UserInformationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -66,7 +65,7 @@ public class PaymentControllerIT {
         assertThat(entity.getAmount()).isNotNull();
         assertThat(entity.getProjectId()).isNotNull();
         assertThat(entity.getProjectName()).isEqualTo(DEFAULT_STRING);
-        assertThat(entity.getUserId()).isNotNull();
+        assertThat(entity.getUsername()).isEqualTo(DEFAULT_USERNAME);
     }
 
     @Test
@@ -83,7 +82,7 @@ public class PaymentControllerIT {
                 .andExpect(jsonPath("$.[0].amount").isNotEmpty())
                 .andExpect(jsonPath("$.[0].projectId").isNotEmpty())
                 .andExpect(jsonPath("$.[0].projectName").value(DEFAULT_STRING))
-                .andExpect(jsonPath("$.[0].userId").isNotEmpty());
+                .andExpect(jsonPath("$.[0].username").isNotEmpty());
     }
 
     @Test
@@ -100,7 +99,7 @@ public class PaymentControllerIT {
                 .andExpect(jsonPath("$.amount").isNotEmpty())
                 .andExpect(jsonPath("$.projectId").isNotEmpty())
                 .andExpect(jsonPath("$.projectName").value(DEFAULT_STRING))
-                .andExpect(jsonPath("$.userId").isNotEmpty());
+                .andExpect(jsonPath("$.username").isNotEmpty());
     }
 
     @Test
@@ -126,7 +125,7 @@ public class PaymentControllerIT {
         assertThat(newEntity.getAmount()).isNotNull();
         assertThat(newEntity.getProjectId()).isNotNull();
         assertThat(newEntity.getProjectName()).isEqualTo(UPDATED_STRING);
-        assertThat(newEntity.getUserId()).isNotNull();
+        assertThat(newEntity.getUsername()).isEqualTo(DEFAULT_USERNAME);
     }
 
     @Test

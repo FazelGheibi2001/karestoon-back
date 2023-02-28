@@ -17,7 +17,7 @@ public class PaymentHistory implements Serializable {
     private @Column(columnDefinition = "VARCHAR(255)") String projectId;
     private @Column(columnDefinition = "VARCHAR(255)") String amount;
     private @Column(columnDefinition = "VARCHAR(50)") String date;
-    private @Column(columnDefinition = "VARCHAR(255)") String userId;
+    private @Column(columnDefinition = "VARCHAR(255)") String username;
 
     public PaymentHistory() {
         this.date = TimeConverter.convert(Date.from(Instant.now()), TimeConverter.UPDATED_PATTERN_FORMAT);
@@ -77,12 +77,12 @@ public class PaymentHistory implements Serializable {
         this.date = date;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override
