@@ -1,6 +1,8 @@
 package com.airbyte.charity.user;
 
+import com.airbyte.charity.dto.PaymentHistoryDTO;
 import com.airbyte.charity.dto.UserDTO;
+import com.airbyte.charity.model.PaymentHistory;
 import com.airbyte.charity.model.UserInformation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,6 +52,13 @@ public class UserInformationController {
     @PreAuthorize(USER_UPDATE)
     public ResponseEntity<UserInformation> update(@PathVariable("id") String id, @RequestBody UserDTO dto) {
         return new ResponseEntity<>(service.update(id, dto), HttpStatus.ACCEPTED);
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.GET, value = "/search")
+    @PreAuthorize(USER_UPDATE)
+    public ResponseEntity<UserInformation> getWithSearch(UserDTO search) {
+        return new ResponseEntity<>(service.getWithSearch(search).get(0), HttpStatus.OK);
     }
 
 }
