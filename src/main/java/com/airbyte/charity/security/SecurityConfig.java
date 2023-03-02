@@ -57,11 +57,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors(request -> {
                     CorsConfigurationSource configurationSource = x -> {
                         CorsConfiguration corsConfiguration = new CorsConfiguration();
-//                      corsConfiguration.setAllowedOrigins(List.of("https://www.saadatportal.com"));
-                        corsConfiguration.setAllowedOrigins(List.of("*"));
+                        corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000"));
                         corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
-//                      corsConfiguration.setAllowCredentials(true);
-                        corsConfiguration.setAllowCredentials(false);
+                        corsConfiguration.setAllowCredentials(true);
                         corsConfiguration.setAllowedHeaders(List.of("Content-Type", "Authorization", "Origin", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers", "Access-Control-Allow-Methods", "Access-Control-Allow-Method"));
                         corsConfiguration.setExposedHeaders(List.of("Content-Type", "Authorization", "Access-Control-Allow-Methods", "Access-Control-Allow-Headers", "Access-Control-Allow-Method"));
                         return corsConfiguration;
