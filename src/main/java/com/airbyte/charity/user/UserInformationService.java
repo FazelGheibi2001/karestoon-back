@@ -22,10 +22,15 @@ public class UserInformationService extends ParentService<UserInformation, UserI
 
     @Override
     public UserInformation updateModelFromDto(UserInformation user, UserDTO dto) {
+        return user;
+    }
+
+    public UserInformation update(String username, UserDTO dto) {
+        UserInformation user = this.getByUsername(username);
         user.setFirstName(dto.getFirstName() != null ? dto.getFirstName() : user.getFirstName());
         user.setLastName(dto.getLastName() != null ? dto.getLastName() : user.getLastName());
         user.setPassword(dto.getPassword() != null ? dto.getPassword() : user.getPassword());
-        return user;
+        return repository.save(user);
     }
 
     @Override

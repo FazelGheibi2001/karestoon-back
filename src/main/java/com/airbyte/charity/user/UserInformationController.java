@@ -48,10 +48,10 @@ public class UserInformationController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
+    @RequestMapping(method = RequestMethod.PUT, value = "/{username}")
     @PreAuthorize(USER_UPDATE)
-    public ResponseEntity<UserInformation> update(@PathVariable("id") String id, @RequestBody UserDTO dto) {
-        return new ResponseEntity<>(service.update(id, dto), HttpStatus.ACCEPTED);
+    public ResponseEntity<UserInformation> update(@PathVariable("username") String username, @RequestBody UserDTO dto) {
+        return new ResponseEntity<>(service.update(username, dto), HttpStatus.ACCEPTED);
     }
 
     @ResponseBody
