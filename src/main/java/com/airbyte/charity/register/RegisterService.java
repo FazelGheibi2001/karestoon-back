@@ -6,6 +6,7 @@ import com.airbyte.charity.exception.DataMissException;
 import com.airbyte.charity.exception.InvalidInputException;
 import com.airbyte.charity.model.UserInformation;
 import com.airbyte.charity.permission.Role;
+import com.airbyte.charity.sms.SMSSender;
 import com.airbyte.charity.user.UserInformationRepository;
 import com.airbyte.charity.user.UserInformationService;
 import org.springframework.stereotype.Service;
@@ -19,10 +20,12 @@ import static com.airbyte.charity.register.OTPDatabase.OTP_MAP;
 public class RegisterService {
     private final UserInformationService userInformationService;
     private final UserInformationRepository userInformationRepository;
+    private final SMSSender sendSMS;
 
-    public RegisterService(UserInformationService userInformationService, UserInformationRepository userInformationRepository) {
+    public RegisterService(UserInformationService userInformationService, UserInformationRepository userInformationRepository, SMSSender sendSMS) {
         this.userInformationService = userInformationService;
         this.userInformationRepository = userInformationRepository;
+        this.sendSMS = sendSMS;
     }
 
     public RegisterDTO verifyPhoneNumber(RegisterDTO dto) {
@@ -43,19 +46,8 @@ public class RegisterService {
     }
 
     private void sendSMS(String otp, String phoneNumber) {
-//        OkHttpClient client = new OkHttpClient();
-//
-//        MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
-//        RequestBody body = RequestBody.create(mediaType, "message=test&receptor=09111111111&linenumber=5000222&senddate=1508144471&checkid=1");
-//        Request request = new Request.Builder()
-//                .url("https://api.ghasedak.me/v2/sms/send/simple")
-//                .post(body)
-//                .addHeader("content-type", "application/x-www-form-urlencoded")
-//                .addHeader("apikey", "your apikey")
-//                .addHeader("cache-control", "no-cache")
-//                .build();
-//
-//        Response response = client.newCall(request).execute();
+        String sms = String.format("کد تاییدیه شما در سایت کارستون : %s", otp);
+        sendSMS.sendSMS(phoneNumber, sms);
     }
 
     private String generateOTP(int length) {
