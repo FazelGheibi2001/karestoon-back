@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Optional;
 
 import static com.airbyte.charity.jwt.JwtConfig.SECURE_KEY;
 
@@ -50,15 +51,14 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        String role = "";
+
         Collection<? extends GrantedAuthority> authorities = authResult.getAuthorities();
-        for (int index = 0; index < authorities.size(); index++) {
-            String value = authorities.iterator().next().getAuthority();
-            if (value.contains("Role: ")) {
-                role = value.replace("Role: ", "");
-                break;
-            }
-        }
+        Optional<? extends GrantedAuthority> first = authorities.stream()
+                .filter(authority -> authority.getAuthority().contains("Role: "))
+                .findFirst();
+
+        String role = first.get().getAuthority()
+                .replace("Role: ", "");
 
         String token = Jwts.builder()
                 .setSubject(authResult.getName())
