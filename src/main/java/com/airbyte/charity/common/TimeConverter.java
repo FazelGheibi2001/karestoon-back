@@ -73,4 +73,18 @@ public class TimeConverter {
         return jalaliDate.format(formatter);
     }
 
+    public static String georgianToJalaliWithHour(String georgian) {
+        String[] date = georgian.split(" ");
+        String[] dateList = date[0].split("/");
+
+        DateConverter dateConverter = new DateConverter();
+
+        JalaliDate jalaliDate = dateConverter.gregorianToJalali(Integer.parseInt(dateList[0]), Integer.parseInt(dateList[1]), Integer.parseInt(dateList[2]));
+
+        JalaliDateFormatter formatter = new JalaliDateFormatter("yyyy/mm/dd");
+        String response =  jalaliDate.format(formatter);
+        response = response + " " + date[1];
+        return response;
+    }
+
 }

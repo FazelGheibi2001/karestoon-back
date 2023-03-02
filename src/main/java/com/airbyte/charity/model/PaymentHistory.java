@@ -20,8 +20,8 @@ public class PaymentHistory implements Serializable {
     private @Column(columnDefinition = "VARCHAR(255)") String username;
 
     public PaymentHistory() {
-        this.date = TimeConverter.convert(Date.from(Instant.now()), TimeConverter.UPDATED_PATTERN_FORMAT);
-        this.date = TimeConverter.georgianToJalali(this.date);
+        this.date = TimeConverter.convert(Date.from(Instant.now()), TimeConverter.DEFAULT_PATTERN_FORMAT);
+        this.date = TimeConverter.georgianToJalaliWithHour(this.date);
     }
 
     public String getId() {
