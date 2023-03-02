@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.airbyte.charity.permission.ManagePermission.USER_READ;
-import static com.airbyte.charity.permission.ManagePermission.USER_WRITE;
+import static com.airbyte.charity.permission.ManagePermission.*;
 
 @RestController
 @RequestMapping(value = "/api/v1/user")
@@ -48,7 +47,7 @@ public class UserInformationController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
-    @PreAuthorize(USER_WRITE)
+    @PreAuthorize(USER_UPDATE)
     public ResponseEntity<UserInformation> update(@PathVariable("id") String id, @RequestBody UserDTO dto) {
         return new ResponseEntity<>(service.update(id, dto), HttpStatus.ACCEPTED);
     }

@@ -24,4 +24,5 @@ public class ManagePermission {
 
     public static final String USER_READ = "hasAuthority('user:read')";
     public static final String USER_WRITE = "hasAuthority('user:write')";
+    public static final String USER_UPDATE = "hasAuthority('user:update')";
 }
