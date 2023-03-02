@@ -52,7 +52,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         String role = "";
         Collection<? extends GrantedAuthority> authorities = authResult.getAuthorities();
-        while (authorities.iterator().hasNext()) {
+        for (int index = 0; index < authorities.size(); index++) {
             String value = authorities.iterator().next().getAuthority();
             if (value.contains("Role: ")) {
                 role = value.replace("Role: ", "");
