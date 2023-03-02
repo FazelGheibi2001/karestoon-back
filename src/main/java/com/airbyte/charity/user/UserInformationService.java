@@ -24,9 +24,7 @@ public class UserInformationService extends ParentService<UserInformation, UserI
     public UserInformation updateModelFromDto(UserInformation user, UserDTO dto) {
         user.setFirstName(dto.getFirstName() != null ? dto.getFirstName() : user.getFirstName());
         user.setLastName(dto.getLastName() != null ? dto.getLastName() : user.getLastName());
-        user.setRole(dto.getRole() != null ? Role.valueOf(dto.getRole()) : user.getRole());
         user.setPassword(dto.getPassword() != null ? dto.getPassword() : user.getPassword());
-        user.setUsername(dto.getUsername() != null ? dto.getUsername() : user.getUsername());
         return user;
     }
 
