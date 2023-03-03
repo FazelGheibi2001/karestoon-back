@@ -94,14 +94,14 @@ public class ProjectService extends ParentService<Project, ProjectRepository, Pr
 
         UserDTO dto = new UserDTO();
         dto.setRole("USER");
-        int activeUser = userInformationService.getWithSearch(dto).size();
+        Long activeUser = (long) userInformationService.getWithSearch(dto).size();
 
         ProjectDTO projectDTO = new ProjectDTO();
         projectDTO.setStatus("complete");
 
-        report.setActiveUsers(String.valueOf(activeUser));
-        report.setUsers(String.valueOf(userInformationService.getAll().size()));
-        report.setCompleteProjects(String.valueOf(this.getWithSearch(projectDTO).size()));
+        report.setActiveUsers(activeUser);
+        report.setUsers((long) userInformationService.getAll().size());
+        report.setCompleteProjects((long) this.getWithSearch(projectDTO).size());
         return report;
     }
 }
