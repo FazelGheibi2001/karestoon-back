@@ -20,9 +20,9 @@ public class Project implements Serializable {
     private @Column(columnDefinition = "VARCHAR(255)") String title;
     private @Column(columnDefinition = "VARCHAR(255)") String description;
     private @Column(columnDefinition = "VARCHAR(255)") String status;
-    private @Column(columnDefinition = "NUMERIC(10, 0)") BigDecimal likeCount;
-    private @Column(columnDefinition = "NUMERIC(12, 4)") BigDecimal expectedBudge;
-    private @Column(columnDefinition = "NUMERIC(12, 4)") BigDecimal prepareBudge;
+    private @Column(columnDefinition = "NUMERIC(20, 0)") BigDecimal likeCount;
+    private @Column(columnDefinition = "NUMERIC(30, 4)") BigDecimal expectedBudge;
+    private @Column(columnDefinition = "NUMERIC(30, 4)") BigDecimal prepareBudge;
     private @Column(columnDefinition = "VARCHAR(255)") String startDate;
     private @Column(columnDefinition = "VARCHAR(255)") String endDate;
     private @Column(columnDefinition = "VARCHAR(50)") String profileId;
