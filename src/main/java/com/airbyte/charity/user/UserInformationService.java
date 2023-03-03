@@ -63,7 +63,7 @@ public class UserInformationService extends ParentService<UserInformation, UserI
         List<Predicate> predicates = new ArrayList<>();
 
         if (search.getRole() != null) {
-            predicates.add(criteriaBuilder.equal(root.get("role"), search.getRole()));
+            predicates.add(criteriaBuilder.equal(root.get("role"), Role.valueOf(search.getRole())));
         }
         if (search.getUsername() != null) {
             predicates.add(criteriaBuilder.equal(root.get("username"), search.getUsername()));
