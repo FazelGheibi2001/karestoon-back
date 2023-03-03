@@ -1,31 +1,31 @@
 package com.airbyte.charity.dto;
 
 public class ReportBarDTO {
-    private Long activeUsers;
-    private Long users;
-    private Long completeProjects;
+    private String activeUsers;
+    private String users;
+    private String completeProjects;
 
-    public Long getActiveUsers() {
+    public String getActiveUsers() {
         return activeUsers;
     }
 
-    public void setActiveUsers(Long activeUsers) {
+    public void setActiveUsers(String activeUsers) {
         this.activeUsers = activeUsers;
     }
 
-    public Long getUsers() {
+    public String getUsers() {
         return users;
     }
 
-    public void setUsers(Long users) {
+    public void setUsers(String users) {
         this.users = users;
     }
 
-    public Long getCompleteProjects() {
+    public String getCompleteProjects() {
         return completeProjects;
     }
 
-    public void setCompleteProjects(Long completeProjects) {
+    public void setCompleteProjects(String completeProjects) {
         this.completeProjects = completeProjects;
     }
 }
