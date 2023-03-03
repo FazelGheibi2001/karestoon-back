@@ -55,4 +55,10 @@ public class TicketController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.GET, value = "/search")
+    public ResponseEntity<List<Ticket>> getWithSearch(TicketDTO search) {
+        return new ResponseEntity<>(service.getWithSearch(search), HttpStatus.OK);
+    }
+
 }
