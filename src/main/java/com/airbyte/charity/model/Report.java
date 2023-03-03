@@ -14,8 +14,7 @@ public class Report implements Serializable {
     @Column(columnDefinition = "VARCHAR(50)", nullable = false) String id;
     private @Column(columnDefinition = "VARCHAR(255)") String title;
     private @Column(columnDefinition = "VARCHAR(255)") String description;
-    private @Convert(converter = FileConverter.class)
-    @Column(columnDefinition = "VARCHAR(1000)") Map<String, String> files;
+    private @Column(columnDefinition = "VARCHAR(50)") String profileId;
     private @Column(columnDefinition = "VARCHAR(50)") String date;
     private @Column(columnDefinition = "VARCHAR(255)") String projectId;
 
@@ -45,12 +44,12 @@ public class Report implements Serializable {
         this.description = description;
     }
 
-    public Map<String, String> getFiles() {
-        return files;
+    public String getProfileId() {
+        return profileId;
     }
 
-    public void setFiles(Map<String, String> files) {
-        this.files = files;
+    public void setProfileId(String profileId) {
+        this.profileId = profileId;
     }
 
     public String getDate() {

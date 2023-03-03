@@ -66,11 +66,7 @@ public class ReportControllerIT {
         assertThat(entity.getDescription()).isEqualTo(DEFAULT_STRING);
         assertThat(entity.getTitle()).isEqualTo(DEFAULT_STRING);
         assertThat(entity.getProjectId()).isEqualTo(DEFAULT_STRING);
-        entity.getFiles()
-                .forEach((name, id) -> {
-                    assertThat(id).isEqualTo(DEFAULT_ID);
-                    assertThat(name).isEqualTo(DEFAULT_NAME);
-                });
+        assertThat(entity.getProfileId()).isEqualTo(DEFAULT_ID);
     }
 
     @Test
@@ -126,11 +122,8 @@ public class ReportControllerIT {
         assertThat(newEntity.getDescription()).isEqualTo(UPDATED_STRING);
         assertThat(newEntity.getTitle()).isEqualTo(UPDATED_STRING);
         assertThat(newEntity.getProjectId()).isEqualTo(DEFAULT_STRING);
-        newEntity.getFiles()
-                .forEach((name, id) -> {
-                    assertThat(id).isEqualTo(DEFAULT_ID);
-                    assertThat(name).isEqualTo(DEFAULT_NAME);
-                });
+        assertThat(newEntity.getProfileId()).isEqualTo(UPDATED_ID);
+
     }
 
     @Test

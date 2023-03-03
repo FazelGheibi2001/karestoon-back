@@ -15,16 +15,9 @@ public class ReportDataProvider {
         ReportDTO dto = new ReportDTO();
         dto.setTitle(DEFAULT_STRING);
         dto.setDescription(DEFAULT_STRING);
-        dto.setFiles(List.of(prepareFile()));
+        dto.setProfileId(DEFAULT_ID);
         dto.setDate(DEFAULT_DATE);
         dto.setProjectId(DEFAULT_STRING);
-        return dto;
-    }
-
-    public FileDTO prepareFile() {
-        FileDTO dto = new FileDTO();
-        dto.setFileId(DEFAULT_ID);
-        dto.setName(DEFAULT_NAME);
         return dto;
     }
 
@@ -32,7 +25,7 @@ public class ReportDataProvider {
         ReportDTO dto = new ReportDTO();
         dto.setTitle(UPDATED_STRING);
         dto.setDescription(UPDATED_STRING);
-        dto.setFiles(List.of(prepareFile()));
+        dto.setProfileId(UPDATED_ID);
         dto.setDate(UPDATED_DATE);
         dto.setProjectId(UPDATED_STRING);
         return dto;

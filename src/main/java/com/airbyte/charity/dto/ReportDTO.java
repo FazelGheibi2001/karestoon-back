@@ -7,7 +7,7 @@ import java.util.List;
 public class ReportDTO implements Serializable {
     private String title;
     private String description;
-    private List<FileDTO> files;
+    private String profileId;
     private String date;
     private String projectId;
 
@@ -27,12 +27,12 @@ public class ReportDTO implements Serializable {
         this.description = description;
     }
 
-    public List<FileDTO> getFiles() {
-        return files;
+    public String getProfileId() {
+        return profileId;
     }
 
-    public void setFiles(List<FileDTO> files) {
-        this.files = files;
+    public void setProfileId(String profileId) {
+        this.profileId = profileId;
     }
 
     public String getDate() {

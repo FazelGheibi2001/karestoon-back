@@ -39,7 +39,7 @@ public class RegisterService {
         } catch (IllegalArgumentException exception) {
             String otp = generateOTP(6);
             OTP_MAP.put(dto.getPhoneNumber(), otp);
-            sendSMS(otp, dto.getPhoneNumber());
+//            sendSMS(otp, dto.getPhoneNumber());
             dto.setStatus("newUser");
             return dto;
         }
@@ -104,7 +104,7 @@ public class RegisterService {
             userInformationService.getByUsername(dto.getPhoneNumber());
             String otp = generateOTP(6);
             OTP_MAP.put(dto.getPhoneNumber(), otp);
-            sendSMS(otp, dto.getPhoneNumber());
+//            sendSMS(otp, dto.getPhoneNumber());
             dto.setStatus("OTPSent");
         } catch (IllegalArgumentException exception) {
             dto.setStatus("newUser");

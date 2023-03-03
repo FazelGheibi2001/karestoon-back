@@ -17,7 +17,7 @@ public class SMSSender {
     }
 
     public void sendSMS(String receiverNumber, String note) {
-        String url = String.format("https://5m5.ir/send_via_get/send_sms.php?username=%s&password=%s&sender_number=%s&receiver_number=%s&note=%s", USERNAME, PASSWORD, NUMBER_3000, receiverNumber, note);
+        String url = String.format("https://5m5.ir/send_via_get/send_sms.php?username=%s&password=%s&sender_number=%s&receiver_number=%s&note=%s", USERNAME, PASSWORD, NUMBER_982122419442, receiverNumber, note);
         try {
             restTemplate.getForObject(url, String.class);
         } catch (Exception exp) {

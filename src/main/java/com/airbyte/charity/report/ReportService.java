@@ -26,6 +26,7 @@ public class ReportService extends ParentService<Report, ReportRepository, Repor
         report.setDate(dto.getDate() != null ? dto.getDate() : report.getDate());
         report.setDescription(dto.getDescription() != null ? dto.getDescription() : report.getDescription());
         report.setTitle(dto.getTitle() != null ? dto.getTitle() : report.getTitle());
+        report.setProfileId(dto.getProfileId() != null ? dto.getProfileId() : report.getProfileId());
         return report;
     }
 
@@ -36,12 +37,7 @@ public class ReportService extends ParentService<Report, ReportRepository, Repor
         report.setDescription(dto.getDescription());
         report.setTitle(dto.getTitle());
         report.setProjectId(dto.getProjectId());
-
-        if (dto.getFiles() != null && !dto.getFiles().isEmpty()) {
-            Map<String, String> fileMap = new TreeMap<>();
-            dto.getFiles().forEach(fileDTO -> fileMap.put(fileDTO.getName(), fileDTO.getFileId()));
-            report.setFiles(fileMap);
-        }
+        report.setProfileId(dto.getProfileId());
         return report;
     }
 
