@@ -56,7 +56,6 @@ public class TicketService extends ParentService<Ticket, TicketRepository, Ticke
                 chat.setTicket(ticket);
                 chat.setSender(entity.getSender());
                 chat.setMessage(entity.getMessage());
-                chat.setDate(entity.getDate());
                 ticket.getChatList().add(chatRepository.save(chat));
             }
         }

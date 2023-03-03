@@ -1,9 +1,12 @@
 package com.airbyte.charity.model;
 
+import com.airbyte.charity.common.TimeConverter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.Instant;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -17,6 +20,11 @@ public class Chat implements Serializable {
     private @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ticket_id") Ticket ticket;
+
+    public Chat() {
+        this.date = TimeConverter.convert(Date.from(Instant.now()), TimeConverter.UPDATED_PATTERN_FORMAT);
+        this.date = TimeConverter.georgianToJalali(this.date);
+    }
 
     public String getMessage() {
         return message;
