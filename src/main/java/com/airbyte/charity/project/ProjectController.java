@@ -1,6 +1,7 @@
 package com.airbyte.charity.project;
 
 import com.airbyte.charity.dto.ProjectDTO;
+import com.airbyte.charity.dto.ReportBarDTO;
 import com.airbyte.charity.model.Project;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,5 +57,10 @@ public class ProjectController {
     @RequestMapping(method = RequestMethod.GET, value = "/search")
     public ResponseEntity<List<Project>> getWithSearch(ProjectDTO search) {
         return new ResponseEntity<>(service.getWithSearch(search), HttpStatus.OK);
+    }
+
+    @GetMapping("/report/footer")
+    public ResponseEntity<ReportBarDTO> getReportBar() {
+        return new ResponseEntity<>(service.getReportBar(), HttpStatus.OK);
     }
 }

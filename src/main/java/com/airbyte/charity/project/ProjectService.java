@@ -2,7 +2,10 @@ package com.airbyte.charity.project;
 
 import com.airbyte.charity.common.ParentService;
 import com.airbyte.charity.dto.ProjectDTO;
+import com.airbyte.charity.dto.ReportBarDTO;
+import com.airbyte.charity.dto.UserDTO;
 import com.airbyte.charity.model.Project;
+import com.airbyte.charity.user.UserInformationService;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -17,8 +20,10 @@ import java.util.TreeMap;
 @Service
 public class ProjectService extends ParentService<Project, ProjectRepository, ProjectDTO> {
 
-    public ProjectService(ProjectRepository repository) {
+    private final UserInformationService userInformationService;
+    public ProjectService(ProjectRepository repository, UserInformationService userInformationService) {
         super(repository);
+        this.userInformationService = userInformationService;
     }
 
     @Override
@@ -82,5 +87,21 @@ public class ProjectService extends ParentService<Project, ProjectRepository, Pr
         criteriaBuilderQuery.where(predicates.toArray(new Predicate[0]));
 
         return entityManager.createQuery(criteriaBuilderQuery).getResultList();
+    }
+
+    public ReportBarDTO getReportBar() {
+        ReportBarDTO report = new ReportBarDTO();
+
+        UserDTO dto = new UserDTO();
+        dto.setRole("USER");
+        Long activeUser = (long) userInformationService.getWithSearch(dto).size();
+
+        ProjectDTO projectDTO = new ProjectDTO();
+        projectDTO.setStatus("complete");
+
+        report.setActiveUsers(activeUser);
+        report.setUsers((long) userInformationService.getAll().size());
+        report.setCompleteProjects((long) this.getWithSearch(projectDTO).size());
+        return report;
     }
 }
