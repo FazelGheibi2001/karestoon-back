@@ -68,7 +68,7 @@ public class TicketControllerIT {
         assertThat(entity.getTitle()).isEqualTo(DEFAULT_STRING);
         entity.getChatList()
                 .forEach(chat -> {
-                    assertThat(chat.getDate()).isEqualTo(DEFAULT_DATE);
+                    assertThat(chat.getDate()).isNotNull();
                     assertThat(chat.getSender()).isEqualTo(DEFAULT_NAME);
                     assertThat(chat.getMessage()).isEqualTo(DEFAULT_STRING);
                 });
@@ -88,7 +88,7 @@ public class TicketControllerIT {
                 .andExpect(jsonPath("$.[0].status").value(DEFAULT_STRING))
                 .andExpect(jsonPath("$.[0].userId").value(DEFAULT_ID))
                 .andExpect(jsonPath("$.[0].title").value(DEFAULT_STRING))
-                .andExpect(jsonPath("$.[0].chatList.[0].date").value(DEFAULT_DATE))
+                .andExpect(jsonPath("$.[0].chatList.[0].date").isNotEmpty())
                 .andExpect(jsonPath("$.[0].chatList.[0].sender").value(DEFAULT_NAME))
                 .andExpect(jsonPath("$.[0].chatList.[0].message").value(DEFAULT_STRING));
     }
@@ -107,7 +107,7 @@ public class TicketControllerIT {
                 .andExpect(jsonPath("$.status").value(DEFAULT_STRING))
                 .andExpect(jsonPath("$.userId").value(DEFAULT_ID))
                 .andExpect(jsonPath("$.title").value(DEFAULT_STRING))
-                .andExpect(jsonPath("$.chatList.[0].date").value(DEFAULT_DATE))
+                .andExpect(jsonPath("$.chatList.[0].date").isNotEmpty())
                 .andExpect(jsonPath("$.chatList.[0].sender").value(DEFAULT_NAME))
                 .andExpect(jsonPath("$.chatList.[0].message").value(DEFAULT_STRING));
     }

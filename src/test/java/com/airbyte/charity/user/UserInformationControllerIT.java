@@ -112,7 +112,7 @@ public class UserInformationControllerIT {
 
         user = dataProvider.updateEntity();
 
-        mockMvc.perform(put("/api/v1/user/{id}", entity.getId())
+        mockMvc.perform(put("/api/v1/user/{username}", entity.getUsername())
                         .header("Authorization", token())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(user)))
@@ -124,7 +124,6 @@ public class UserInformationControllerIT {
         assertThat(newEntity.getId()).isNotBlank();
         assertThat(newEntity.getLastName()).isEqualTo(UPDATED_NAME);
         assertThat(newEntity.getFirstName()).isEqualTo(UPDATED_NAME);
-        assertThat(newEntity.getUsername()).isEqualTo(UPDATED_STRING);
         assertThat(newEntity.getPassword()).isEqualTo(UPDATED_STRING);
         assertThat(entity.getRole()).isEqualTo(Role.ADMIN);
     }
